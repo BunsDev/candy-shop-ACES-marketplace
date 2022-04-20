@@ -48,8 +48,8 @@ const MultiCurrencyMarketplace: React.FC = () => {
         walletConnectComponent={<WalletMultiButton />}
         // configure filter by collection
         filters={[
-          {name: 'Aces', identifier: -280213123 },
-          {name: 'Jokers', identifier: -38328789 },
+          {name: 'Aces', identifier: -685327437 },
+          {name: 'Aces (Jokers)', identifier: 285827152 },
         ]}
       />
     </DesContainer>
