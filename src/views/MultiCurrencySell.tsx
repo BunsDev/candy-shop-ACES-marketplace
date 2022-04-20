@@ -6,7 +6,6 @@ import { useCurrency } from '../components/Currency'
 import styled from 'styled-components'
 
 const CANDY_SHOP_CREATOR_ADDRESS = new PublicKey(process.env.REACT_APP_CANDY_SHOP_CREATOR_ADDRESS!)
-const CANDY_SHOP_TREASURY_MINT = new PublicKey(process.env.REACT_APP_CANDY_SHOP_TREASURY_MINT!)
 const CANDY_SHOP_PROGRAM_ID = new PublicKey(process.env.REACT_APP_CANDY_SHOP_PROGRAM_ID!)
 const NETWORK = process.env.REACT_APP_SOLANA_NETWORK! as Cluster
 
@@ -23,17 +22,19 @@ const MyCollection: React.FC = () => {
 
   const wallet = useAnchorWallet()
 
+  console.log(wallet);
+
   const { currency, getCurrencySettings } = useCurrency()
 
   console.log('Currency', currency);
 
   const candyShop = new CandyShop(
     CANDY_SHOP_CREATOR_ADDRESS,
-    CANDY_SHOP_TREASURY_MINT,
+    new PublicKey(getCurrencySettings().currencyMintAddress),
     CANDY_SHOP_PROGRAM_ID,
     NETWORK,
     getCurrencySettings()
-  )
+  );
 
   return (
     <DesContainer>

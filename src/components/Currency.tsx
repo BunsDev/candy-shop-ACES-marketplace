@@ -1,25 +1,42 @@
-import { useContext, createContext, useState, useEffect } from 'react';
+import { useContext, createContext, useState, useEffect } from "react";
+
+type CurrencyOption = {
+  currencySymbol: string;
+  currencyMintAddress: string;
+  currencyDecimals: number;
+  priceDecimals: number;
+  volumeDecimals: number;
+};
 
 interface CurrencyType {
   currency: string;
   setCurrency: Function;
-  getCurrencySettings: Function;
-  currencyOptions: {
-    currencySymbol: string,
-    currencyDecimals: number,
-    priceDecimals: number,
-    volumeDecimals: number
-  }[];
+  getCurrencySettings: () => CurrencyOption;
+  currencyOptions: CurrencyOption[];
 }
 
 const CurrencyContext = createContext<CurrencyType>({
-  currency: 'SOL',
+  currency: "SOL",
   setCurrency: () => {},
-  getCurrencySettings: () => {},
-  currencyOptions: [{currencySymbol: 'SOL', currencyDecimals: 9, priceDecimals: 3, volumeDecimals: 1}],
+  getCurrencySettings: () => ({
+    currencySymbol: "SOL",
+    currencyMintAddress: "So11111111111111111111111111111111111111112",
+    currencyDecimals: 9,
+    priceDecimals: 3,
+    volumeDecimals: 1,
+  }),
+  currencyOptions: [
+    {
+      currencySymbol: "SOL",
+      currencyMintAddress: "CdQseFmnPh2JBiz5747dJ6oYXK9NKnbdFRfiXTcZuaXT",
+      currencyDecimals: 9,
+      priceDecimals: 3,
+      volumeDecimals: 1,
+    },
+  ],
 });
 
-const CANDY_SHOP_CURRENCY_SYMBOL = 'CandyShopCurrencySymbol';
+const CANDY_SHOP_CURRENCY_SYMBOL = "CandyShopCurrencySymbol";
 
 export function useCurrency() {
   return useContext(CurrencyContext);
@@ -27,13 +44,15 @@ export function useCurrency() {
 
 export function CurrencyProvider({
   currencyOptions,
-  children
+  children,
 }: {
-  currencyOptions: CurrencyType['currencyOptions'],
-  children: any
+  currencyOptions: CurrencyOption[];
+  children: any;
 }) {
   // users' preferred currency is stored and retrieved from local storage
-  let defaultSymbol = localStorage.getItem(CANDY_SHOP_CURRENCY_SYMBOL) || currencyOptions[0].currencySymbol;
+  let defaultSymbol =
+    localStorage.getItem(CANDY_SHOP_CURRENCY_SYMBOL) ||
+    currencyOptions[0].currencySymbol;
 
   const [currency, setCurrency] = useState(defaultSymbol);
 
@@ -42,19 +61,19 @@ export function CurrencyProvider({
   }, [currency]);
 
   const getCurrencySettings = () => {
-    return currencyOptions.find(option => currency === option.currencySymbol);
+    return currencyOptions.find((option) => currency === option.currencySymbol)!;
   };
 
   const value = {
     currency,
     setCurrency,
     getCurrencySettings,
-    currencyOptions
+    currencyOptions,
   };
 
   return (
     <CurrencyContext.Provider value={value}>
       {children}
     </CurrencyContext.Provider>
-  )
+  );
 }

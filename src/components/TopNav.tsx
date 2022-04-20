@@ -2,12 +2,7 @@ import React from 'react'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { Link } from 'react-router-dom'
 import { useAnchorWallet } from '@solana/wallet-adapter-react'
-import MenuItem from '@material-ui/core/MenuItem'
-import MenuList from '@material-ui/core/MenuList'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import CurrencyToggle from './CurrencyToggle'
-import Paper from '@material-ui/core/Paper'
-import Popper from '@material-ui/core/Popper'
 import styled from 'styled-components'
 
 interface TopNavProps {
@@ -19,37 +14,6 @@ const TopNav: React.FC<TopNavProps> = ({
 }) => {
   const wallet = useAnchorWallet()
 
-  const [open, setOpen] = React.useState(false)
-  const anchorRef = React.useRef<HTMLLIElement>(null)
-
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event: any) => {
-    if (anchorRef?.current && (anchorRef.current as any).contains(event.target)) {
-      return;
-    }
-    setOpen(false);
-  };
-
-  function handleListKeyDown(event: any) {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      setOpen(false);
-    }
-  }
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      if (anchorRef.current !== null) anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
-
   return (
     <HeaderBar>
       <Logo>
@@ -59,32 +23,11 @@ const TopNav: React.FC<TopNavProps> = ({
       </Logo>
       <Menu>
         <li>
-          <Link to='/'>Home</Link>
-        </li>
-        <li>
-          <Link to='/marketplace'>Marketplace</Link>
+          <Link to='/'>Marketplace</Link>
         </li>
         <li>
           <Link to='/sell'>Sell</Link>
         </li>
-        <DropdownAnchor ref={anchorRef} onClick={handleToggle}>
-          Other Layouts
-          <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-            {({ TransitionProps, placement }) => (
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList autoFocusItem={open} onKeyDown={handleListKeyDown}>
-                    <MenuItem><Link to='/custom-token-marketplace'>Custom Token Marketplace</Link></MenuItem>
-                    <MenuItem><Link to='/multi-collection-marketplace'>Multi Collection Marketplace</Link></MenuItem>
-                    <MenuItem><Link to='/marketplace-with-url'>Marketplace With URL</Link></MenuItem>
-                    <MenuItem><Link to='/multi-currency-marketplace'>Multi Currency Marketplace</Link></MenuItem>
-                    <MenuItem><Link to='/multi-currency-sell'>Multi Currency Sell</Link></MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            )}
-          </Popper>
-        </DropdownAnchor>
       </Menu>
       { showCurrencyToggle && <CurrencyToggle />}
       <Wallet>
@@ -105,32 +48,6 @@ const HeaderBar = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 30px;
-`
-
-const DropdownAnchor = styled.li`
-  cursor: pointer;
-
-  &:hover {
-    color: rgb(131,146,161);
-  }
-
-  > div {
-    z-index: 1000;
-  }
-
-  .MuiList-root {
-    margin-top: 15px;
-
-    a {
-      padding-top: 4px;
-      padding-bottom: 4px;
-
-      &:hover {
-        border-bottom: 0px;
-        color: #fff;
-      }
-    }
-  }
 `
 
 // const WalletAmount = styled.div`
