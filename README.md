@@ -71,45 +71,22 @@ Rename the `.env.example` file at the root directory to `.env` and update the fo
 
 ```
 REACT_APP_CANDY_SHOP_CREATOR_ADDRESS=__PLACEHOLDER__
-REACT_APP_CANDY_SHOP_TREASURY_MINT=__PLACEHOLDER__
 REACT_APP_CANDY_SHOP_PROGRAM_ID=csa8JpYfKSZajP7JzxnJipUL3qagub1z29hLvp578iN
 ```
 You may get these parameters by creating a shop [here](https://candy.liqnft.com/my-shop).
 
 ```
-REACT_APP_SOLANA_NETWORK=devnet
+REACT_APP_SOLANA_NETWORK=mainnet-beta
 ```
 
 This identifies the Solana network you want to connect to. Options are `devnet`, `testnet`, and `mainnet-beta`.
 
 ```
-REACT_APP_SOLANA_RPC_HOST=https://api.devnet.solana.com
+REACT_APP_SOLANA_RPC_HOST=https://api.mainnet-beta.solana.com
 ```
 
 This identifies the RPC server your web app will access the Solana network through.
 
-##### For Candy Machine V2
-
-```
-REACT_APP_CANDY_MACHINE_ID=__PLACEHOLDER__
-```
-set __PLACEHOLDER__ with the candy machine pubkey you get once you upload & create your candy machine in Metaplex project. You can find back the value from the `.cache/temp.json` file of your Metaplex project. This file is created when you run the `ts-node candy-machine-v2-cli.ts upload ...` command.
-
-If you are using a custom SPL Token to MINT, you have two additional environment parameters to set :
-
-```
-REACT_APP_SPL_TOKEN_TO_MINT_NAME=
-```
-
-Spl-token name to display next the price.
-
-```
-REACT_APP_SPL_TOKEN_TO_MINT_DECIMALS=9
-```
-
-Spl-token decimals were defined during its creation with --decimals parameter. If you didn't use that parameter, then by default your SPL Token got 9 decimals.
-
-More info about it there : https://spl.solana.com/token
 
 #### 3. Build the project and test. Go to the root project directory and type the commands :
 
